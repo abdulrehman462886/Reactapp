@@ -1,6 +1,35 @@
 import React from "react";
+import { useState } from "react";
+import Table from "./Table";
 
-export default function Form(props) {
+export default function Form() {
+  const [boolean, setBoolean] = useState(false)
+  const [inputarr, setInputarr] = useState([]);
+  const [index, setIndex] = useState([]);
+  const [inputdata, setInputdata] = useState({
+    name: "",
+    email: "",
+    dob: "",
+    address: "",
+  });
+  let { name, email, dob, address } = inputdata;
+  function addrecordhandle() {
+    setInputarr([...inputarr, { name, email, dob, address }]);
+    //clear the input field again
+    setInputdata({ name: "", email: "", dob: "", address: "" });
+  }
+   // function to splice the previous record from that particular index
+   function updateData(){
+    let total = [...inputarr]
+    total.splice(index,1,{name, email, dob, address})
+    setInputarr(total)
+    setBoolean(false)
+    setInputdata({ name: "", email: "", dob: "", address: "" });
+  }
+    //function to handle changes in input field
+    function changehandle(event) {
+      setInputdata({ ...inputdata, [event.target.name]: event.target.value });
+    }
   return (
     <div className="container">
       <div className="container my-3">
@@ -8,8 +37,8 @@ export default function Form(props) {
           Name
         </label>
         <input
-          value={props.inputdata.name}
-          onChange={props.changehandle}
+          value={inputdata.name}
+          onChange={changehandle}
           autoComplete="off"
           type="text"
           name="name"
@@ -23,8 +52,8 @@ export default function Form(props) {
          Email
         </label>
         <input
-          value={props.inputdata.email}
-          onChange={props.changehandle}
+          value={inputdata.email}
+          onChange={changehandle}
           type="email"
           name="email"
           autoComplete="off"
@@ -38,8 +67,8 @@ export default function Form(props) {
           DOB
         </label>
         <input
-          value={props.inputdata.dob}
-          onChange={props.changehandle}
+          value={inputdata.dob}
+          onChange={changehandle}
           type="text"
           autoComplete="off"
           name="dob"
@@ -53,8 +82,8 @@ export default function Form(props) {
           Address
         </label>
         <input
-          value={props.inputdata.address}
-          onChange={props.changehandle}
+          value={inputdata.address}
+          onChange={changehandle}
           type="text"
           name="address"
           autoComplete="off"
@@ -65,17 +94,19 @@ export default function Form(props) {
       </div>
       <button
         disabled={
-          props.inputdata.name.length === 0 ||
-          props.inputdata.email.length === 0 ||
-          props.inputdata.dob.length === 0 ||
-          props.inputdata.address.length === 0
+          inputdata.name.length === 0 ||
+          inputdata.email.length === 0 ||
+          inputdata.dob.length === 0 ||
+          inputdata.address.length === 0
         }
         type="button"
-        onClick={props.boolean ? props.updateData : props.addrecordhandle}
+        onClick={boolean ? updateData : addrecordhandle}
         className="container btn btn-success my-3"
       >
-        {props.boolean ? `Update Record` : `Add Record`}
+        {boolean ? `Update Record` : `Add Record`}
       </button>
+      <Table setIndex={setIndex} inputarr={inputarr} setInputarr={setInputarr} setInputdata={setInputdata} setBoolean={setBoolean}/>
     </div>
+    
   );
 }

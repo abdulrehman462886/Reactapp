@@ -1,6 +1,17 @@
 import React from "react";
 
 export default function Table(props) {
+  function deleteInput(index) {
+    let totalrecords = [...props.inputarr]
+    totalrecords.splice(index,1)
+    props.setInputarr(totalrecords)
+  }
+  function updateInput(index) {
+    let {name, email, dob, address} = props.inputarr[index]
+    props.setInputdata({name, email, dob, address})
+    props.setBoolean(true)
+    props.setIndex(index)
+}
   return (
     <div className="container">
       <table className="table my-3">
@@ -30,7 +41,7 @@ export default function Table(props) {
                     type="button"
                     className="btn btn-danger"
                     onClick={() => {
-                      props.deleteInput(index);
+                      deleteInput(index);
                     }}
                   >
                     Delete
@@ -41,7 +52,7 @@ export default function Table(props) {
                     type="button"
                     className="btn btn-primary"
                     onClick={() => {
-                      props.updateInput(index);
+                      updateInput(index);
                     }}
                   >
                     Update
