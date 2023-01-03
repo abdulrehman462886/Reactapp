@@ -1,49 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-export default function Form() {
-  const [inputarr, setInputarr] = useState([]);
-  const [boolean, setBoolean] = useState(false)
-  const [index, setIndex] = useState([]);
-  const [inputdata, setInputdata] = useState({
-    name: "",
-    email: "",
-    dob: "",
-    address: "",
-  });
-  //function to handle changes in input field
-  function changehandle(event) {
-    setInputdata({ ...inputdata, [event.target.name]: event.target.value });
-  }
-  //function to add record in array
-  let { name, email, dob, address } = inputdata;
-  function addrecordhandle() {
-    setInputarr([...inputarr, { name, email, dob, address }]);
-    //clear the input field again
-    setInputdata({ name: "", email: "", dob: "", address: "" });
-  }
-  //function to remove record from array
-  function deleteInput(index) {
-    let totalrecords = [...inputarr]
-    totalrecords.splice(index,1)
-    setInputarr(totalrecords)
-  }
-  //function to update input fields
-  function updateInput(index) {
-      let {name, email, dob, address} = inputarr[index]
-      setInputdata({name, email, dob, address})
-      setBoolean(true)
-      setIndex(index)
-  }
-  //function to splice the previous record from that particular index
-  function updateData(){
-    let total = [...inputarr]
-    total.splice(index,1,{name, email, dob, address})
-    setInputarr(total)
-    setBoolean(false)
-    setInputdata({ name: "", email: "", dob: "", address: "" });
-  }
-
-
+export default function Form(props) {
   return (
     <div className="container">
       <div className="container my-3">
@@ -51,8 +8,8 @@ export default function Form() {
           Name
         </label>
         <input
-          value={inputdata.name}
-          onChange={changehandle}
+          value={props.inputdata.name}
+          onChange={props.changehandle}
           autoComplete="off"
           type="text"
           name="name"
@@ -63,11 +20,11 @@ export default function Form() {
       </div>
       <div className="container my-3">
         <label htmlFor="exampleFormControlInput1" className="form-label">
-          Email
+         Email
         </label>
         <input
-          value={inputdata.email}
-          onChange={changehandle}
+          value={props.inputdata.email}
+          onChange={props.changehandle}
           type="email"
           name="email"
           autoComplete="off"
@@ -81,8 +38,8 @@ export default function Form() {
           DOB
         </label>
         <input
-          value={inputdata.dob}
-          onChange={changehandle}
+          value={props.inputdata.dob}
+          onChange={props.changehandle}
           type="text"
           autoComplete="off"
           name="dob"
@@ -96,8 +53,8 @@ export default function Form() {
           Address
         </label>
         <input
-          value={inputdata.address}
-          onChange={changehandle}
+          value={props.inputdata.address}
+          onChange={props.changehandle}
           type="text"
           name="address"
           autoComplete="off"
@@ -108,46 +65,17 @@ export default function Form() {
       </div>
       <button
         disabled={
-          inputdata.name.length === 0 ||
-          inputdata.email.length === 0 ||
-          inputdata.dob.length === 0 ||
-          inputdata.address.length === 0
+          props.inputdata.name.length === 0 ||
+          props.inputdata.email.length === 0 ||
+          props.inputdata.dob.length === 0 ||
+          props.inputdata.address.length === 0
         }
         type="button"
-        onClick={boolean?updateData:addrecordhandle}
+        onClick={props.boolean ? props.updateData : props.addrecordhandle}
         className="container btn btn-success my-3"
       >
-        {boolean?`Update Record`:`Add Record`}
+        {props.boolean ? `Update Record` : `Add Record`}
       </button>
-      <table className="table my-3">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">DOB</th>
-            <th scope="col">Address</th>
-            <th scope="col">Delete</th>
-            <th scope="col">Update</th>
-          </tr>
-        </thead>
-        <tbody>
-         {/* Function to map through the input array */}
-          {inputarr.map((value, index) => {
-            return (
-              <tr key={index + 1}>
-                <td>{index + 1}</td>
-                <td>{value.name}</td>
-                <td>{value.email}</td>
-                <td>{value.dob}</td>
-                <td>{value.address}</td>
-                <td><button type="button" className="btn btn-danger" onClick={()=>{deleteInput(index)}}>Delete</button></td>
-                <td><button type="button" className="btn btn-primary" onClick={()=>{updateInput(index)}}>Update</button></td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
     </div>
   );
 }
