@@ -1,9 +1,8 @@
-import React from "react";
 import { useState } from "react";
-import Table from "./Table";
+
 
 export default function Form() {
-  const [boolean, setBoolean] = useState(false)
+  const [boolean, setBoolean] = useState(false);
   const [inputarr, setInputarr] = useState([]);
   const [index, setIndex] = useState([]);
   const [inputdata, setInputdata] = useState({
@@ -18,18 +17,19 @@ export default function Form() {
     //clear the input field again
     setInputdata({ name: "", email: "", dob: "", address: "" });
   }
-   // function to splice the previous record from that particular index
-   function updateData(){
-    let total = [...inputarr]
-    total.splice(index,1,{name, email, dob, address})
-    setInputarr(total)
-    setBoolean(false)
+  // function to splice the previous record from that particular index
+  function updateData() {
+    let total = [...inputarr];
+    total.splice(index, 1, { name, email, dob, address });
+    setInputarr(total);
+    setBoolean(false);
     setInputdata({ name: "", email: "", dob: "", address: "" });
   }
-    //function to handle changes in input field
-    function changehandle(event) {
-      setInputdata({ ...inputdata, [event.target.name]: event.target.value });
-    }
+  //function to handle changes in input field
+  function changehandle(event) {
+    setInputdata({ ...inputdata, [event.target.name]: event.target.value });
+  }
+
   return (
     <div className="container">
       <div className="container my-3">
@@ -49,7 +49,7 @@ export default function Form() {
       </div>
       <div className="container my-3">
         <label htmlFor="exampleFormControlInput1" className="form-label">
-         Email
+          Email
         </label>
         <input
           value={inputdata.email}
@@ -105,8 +105,6 @@ export default function Form() {
       >
         {boolean ? `Update Record` : `Add Record`}
       </button>
-      <Table setIndex={setIndex} inputarr={inputarr} setInputarr={setInputarr} setInputdata={setInputdata} setBoolean={setBoolean}/>
     </div>
-    
   );
 }
