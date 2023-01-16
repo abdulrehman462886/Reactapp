@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 export default function Currentweather() {
-  const [data, setData] = useState([""]);
+  const [data, setData] = useState([]);
 
   const getData = () => {
     fetch(
@@ -23,9 +23,8 @@ export default function Currentweather() {
       <div className="container">
         <ul>
           <li>
-            <h2>
-              City<pre>{JSON.stringify(data.name, null, 1)}</pre>
-            </h2>
+            <h2>City</h2>
+            <h4>{data.name}</h4>
           </li>
           <li>
             <h2>

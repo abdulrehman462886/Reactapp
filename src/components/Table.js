@@ -1,16 +1,6 @@
 import React from "react";  
-export default function Table() {
-  function deleteInput(index) {
-    let totalrecords = [...inputarr]
-    totalrecords.splice(index,1)
-    setInputarr(totalrecords)
-  }
-  function updateInput(index) {
-    let {name, email, dob, address} = inputarr[index]
-    setInputdata({name, email, dob, address})
-    setBoolean(true)
-    setIndex(index)
-}
+export default function Table(props) {
+ 
   return (
     <div className="container">
       <table className="table my-3">
@@ -27,7 +17,7 @@ export default function Table() {
         </thead>
         <tbody>
           {/* Function to map through the input array */}
-          {inputarr.map((value, index) => {
+          {props.inputarr.map((value, index) => {
             return (
               <tr key={index + 1}>
                 <td>{index + 1}</td>
@@ -40,7 +30,7 @@ export default function Table() {
                     type="button"
                     className="btn btn-danger"
                     onClick={() => {
-                      deleteInput(index);
+                      props.deleteInput(index);
                     }}
                   >
                     Delete
@@ -51,7 +41,7 @@ export default function Table() {
                     type="button"
                     className="btn btn-primary"
                     onClick={() => {
-                      updateInput(index);
+                      props.updateInput(index);
                     }}
                   >
                     Update
